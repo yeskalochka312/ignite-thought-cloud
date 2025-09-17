@@ -1,0 +1,592 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Map Of Love Design System - Dark theme with red neon accents */
+
+@layer base {
+  :root {
+    /* Dark palette */
+    --background: 217 25% 6%;
+    --surface: 217 20% 9%;
+    --surface-hover: 217 18% 11%;
+    --foreground: 210 40% 95%;
+    --foreground-muted: 217 15% 70%;
+    
+    /* Red neon accents */
+    --neon-red: 354 84% 57%;
+    --neon-red-glow: 354 84% 57%;
+    --neon-red-dark: 354 65% 35%;
+    
+    /* Additional colors */
+    --success: 158 64% 52%;
+    --warning: 43 96% 68%;
+    --info: 220 70% 70%;
+    
+    /* Component colors */
+    --card: 217 23% 8%;
+    --card-hover: 217 20% 10%;
+    --border: 217 15% 20%;
+    --input-bg: 217 25% 6%;
+    --glass-bg: 217 23% 8%;
+    
+    /* Shadows & glows */
+    --neon-glow: 0 0 24px hsla(354, 84%, 57%, 0.25);
+    --card-shadow: 0 8px 32px hsla(217, 25%, 3%, 0.6);
+    --inset-shadow: inset 2px 5px 10px hsla(217, 25%, 3%, 0.9);
+    
+    /* Typography */
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+    
+    /* Radius */
+    --radius: 16px;
+    --radius-lg: 24px;
+    --radius-full: 9999px;
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans;
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(217, 22%, 7%) 100%);
+    min-height: 100vh;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+  }
+  
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--surface));
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--neon-red));
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--neon-red-dark));
+  }
+}
+
+@layer components {
+  /* Loader */
+  .loader {
+    width: 60px;
+    aspect-ratio: 1;
+    background: linear-gradient(hsl(var(--neon-red)) 0 0) bottom/100% 0% no-repeat hsl(var(--surface));
+    -webkit-mask: 
+      radial-gradient(circle at 60% 65%, #000 62%, #0000 65%) top left,
+      radial-gradient(circle at 40% 65%, #000 62%, #0000 65%) top right,
+      linear-gradient(to bottom left, #000 42%, #0000 43%) bottom left,
+      linear-gradient(to bottom right, #000 42%, #0000 43%) bottom right;
+    -webkit-mask-size: 50% 50%;
+    -webkit-mask-repeat: no-repeat;
+    animation: loader-fill 2s infinite linear;
+  }
+  
+  @keyframes loader-fill {
+    90%, 100% { background-size: 100% 100%; }
+  }
+  
+  /* Glass effect */
+  .glass {
+    background: hsla(var(--glass-bg), 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsla(var(--border), 0.3);
+  }
+  
+  /* Neon glow */
+  .neon-glow {
+    box-shadow: var(--neon-glow);
+  }
+  
+  /* 3D Button System - from Uiverse.io adapted for our design system */
+  .btn-3d {
+    /* CSS Variables for colors */
+    --button_radius: 0.75em;
+    --button_color: hsl(var(--neon-red));
+    --button_outline_color: hsl(var(--neon-red-dark));
+    --button_text_color: white;
+    
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--button_radius);
+    background: transparent;
+    padding: 0;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Default variant colors */
+  .btn-3d {
+    --button_color: hsl(var(--neon-red));
+    --button_outline_color: hsl(var(--neon-red-dark));
+    --button_text_color: white;
+  }
+
+  /* Destructive variant */
+  .btn-3d.btn-destructive {
+    --button_color: hsl(var(--destructive));
+    --button_outline_color: hsl(354 65% 35%);
+    --button_text_color: white;
+  }
+
+  /* Outline variant */
+  .btn-3d.btn-outline {
+    --button_color: hsl(var(--surface));
+    --button_outline_color: hsl(var(--border));
+    --button_text_color: hsl(var(--foreground));
+  }
+
+  .btn-3d.btn-outline:hover {
+    --button_color: hsl(var(--neon-red));
+    --button_outline_color: hsl(var(--neon-red-dark));
+    --button_text_color: white;
+  }
+
+  /* Secondary variant */
+  .btn-3d.btn-secondary {
+    --button_color: hsl(var(--surface-hover));
+    --button_outline_color: hsl(var(--surface));
+    --button_text_color: hsl(var(--foreground));
+  }
+
+  /* Ghost variant */
+  .btn-3d.btn-ghost {
+    --button_color: transparent;
+    --button_outline_color: transparent;
+    --button_text_color: hsl(var(--foreground));
+  }
+
+  .btn-3d.btn-ghost:hover {
+    --button_color: hsl(var(--surface-hover));
+    --button_outline_color: hsl(var(--surface));
+  }
+
+  /* The actual button surface */
+  .button_top {
+    display: block;
+    box-sizing: border-box;
+    border: 2px solid var(--button_outline_color);
+    border-radius: var(--button_radius);
+    padding: 0.75em 1.5em;
+    background: var(--button_color);
+    color: var(--button_text_color);
+    transform: translateY(-0.2em);
+    transition: transform 0.1s ease, background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: inherit;
+    font-size: inherit;
+  }
+
+  .btn-3d:hover .button_top {
+    /* Pull the button upwards when hovered */
+    transform: translateY(-0.33em);
+  }
+
+  .btn-3d:active .button_top {
+    /* Push the button downwards when pressed */
+    transform: translateY(0);
+  }
+
+  /* Size variants */
+  .btn-3d.btn-sm {
+    font-size: 14px;
+  }
+
+  .btn-3d.btn-sm .button_top {
+    padding: 0.5em 1em;
+  }
+
+  .btn-3d.btn-lg {
+    font-size: 19px;
+  }
+
+  .btn-3d.btn-lg .button_top {
+    padding: 1em 2em;
+  }
+
+  .btn-3d.btn-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .btn-3d.btn-icon .button_top {
+    padding: 0.5em;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  /* Link variant - no 3D effect */
+  .btn-link {
+    background: transparent !important;
+    border: none;
+    color: hsl(var(--neon-red));
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: inherit;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .btn-link:hover {
+    color: hsl(var(--neon-red-dark));
+    text-decoration: underline;
+  }
+
+  /* Disabled state */
+  .btn-3d:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  .btn-3d:disabled .button_top {
+    transform: translateY(-0.1em);
+  }
+  
+  /* Pressy button */
+  .btn-pressy {
+    @apply relative cursor-pointer font-bold rounded-full transition-transform duration-150;
+    padding: 0.8em 2.2em;
+    color: hsl(var(--foreground));
+    background: hsl(var(--surface-hover));
+    border: 4px solid hsl(var(--neon-red));
+    box-shadow: 0 6px 0 hsl(var(--neon-red-dark));
+  }
+  
+  .btn-pressy:active {
+    transform: translateY(6px);
+    box-shadow: 0 0 0 hsl(var(--neon-red-dark));
+  }
+  
+  /* Inputs */
+  .input-glass {
+    @apply w-full px-5 py-3 font-medium text-white bg-transparent border-none outline-none rounded-full;
+    background: hsl(var(--surface));
+    box-shadow: var(--inset-shadow);
+    transition: var(--transition-smooth);
+  }
+  
+  .input-glass:focus {
+    box-shadow: var(--inset-shadow), 0 0 0 2px hsl(var(--neon-red));
+  }
+  
+  .input-glass::placeholder {
+    color: hsl(var(--foreground-muted));
+  }
+
+  /* Hide number input spinners/arrows */
+  .input-glass[type="number"]::-webkit-outer-spin-button,
+  .input-glass[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .input-glass[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  /* Select dropdown options */
+  .input-glass option {
+    background-color: hsl(var(--surface)) !important;
+    color: hsl(var(--foreground)) !important;
+    padding: 12px 16px !important;
+  }
+
+  .input-glass option:hover,
+  .input-glass option:focus {
+    background-color: hsl(var(--surface-hover)) !important;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .input-glass option:checked {
+    background-color: hsl(var(--neon-red)) !important;
+    color: white !important;
+  }
+
+  /* Ensure dropdown has proper styling */
+  select.input-glass {
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--surface));
+    position: relative;
+    z-index: 50;
+  }
+  
+  /* Cards */
+  .card-hover {
+    @apply transition-all duration-300 cursor-pointer;
+    transform-origin: center;
+  }
+  
+  .card-hover:hover {
+    @apply scale-105;
+    box-shadow: var(--card-shadow), 0 0 32px hsla(var(--neon-red), 0.15);
+  }
+  
+  /* Animations */
+  .fade-up {
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+  
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Marquee */
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+  }
+  
+  .marquee-content {
+    display: flex;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  /* 3D Card */
+  .card-3d {
+    perspective: 800px;
+    transform-style: preserve-3d;
+  }
+  
+  .card-3d-inner {
+    @apply relative transition-transform duration-200 ease-out;
+    transform-origin: center center;
+  }
+  
+  /* Interactive grid overlay */
+  .interactive-grid {
+    @apply absolute inset-0 grid grid-cols-5 grid-rows-5 z-10;
+  }
+  
+  /* Interactive map */
+  .interactive-map {
+    @apply absolute inset-0 z-10 flex items-center justify-center;
+  }
+  
+  .map-card {
+    @apply cursor-pointer rounded-2xl object-cover;
+    width: 400px;
+    height: 500px;
+    transform: scale(1) rotate(15deg) rotateZ(var(--scroll-rotation, 0deg));
+    transition: transform 0.3s ease-out;
+    transform-origin: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  .grid-cell {
+    @apply cursor-pointer rounded-2xl;
+    background: linear-gradient(135deg, hsl(var(--neon-red)) 0%, hsl(354, 84%, 70%) 50%, hsl(320, 84%, 60%) 100%);
+    transform: scale(2) rotate(20deg) rotateZ(var(--scroll-rotation, 0deg));
+    transition: transform 0.3s ease-out;
+    transform-origin: center;
+    width: 120px;
+    height: 160px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Switch */
+  .switch {
+    @apply relative flex items-center justify-center w-16 h-8;
+  }
+  
+  .switch input {
+    @apply sr-only;
+  }
+  
+  .slider {
+    @apply absolute inset-0 bg-surface-hover rounded-full border-2 border-border cursor-pointer transition-colors duration-300;
+    box-shadow: 2px 2px 8px hsl(var(--background));
+  }
+  
+  .slider:before {
+    @apply absolute left-1 bottom-0.5 w-6 h-6 bg-foreground rounded-full transition-transform duration-300 flex items-center justify-center text-xs font-semibold;
+    content: '';
+  }
+  
+  .switch input:checked + .slider {
+    @apply bg-neon-red;
+  }
+  
+  .switch input:checked + .slider:before {
+    transform: translateX(32px);
+  }
+  
+  /* Checkbox */
+  .checkbox-custom {
+    @apply relative w-8 h-8 rounded-lg cursor-pointer;
+    background: hsl(var(--surface-hover));
+    border: 2px solid hsl(var(--border));
+    box-shadow: 
+      inset -2px 2px 8px hsl(var(--background)),
+      inset 2px -2px 8px hsl(var(--surface-hover));
+  }
+  
+  .checkbox-custom input {
+    @apply sr-only;
+  }
+  
+  .checkbox-inner {
+    @apply absolute inset-1 rounded-md transition-all duration-200;
+    background: hsl(var(--surface));
+  }
+  
+  .checkbox-custom input:checked + .checkbox-inner {
+    background: hsl(var(--neon-red));
+  }
+  
+  .checkbox-custom input:checked + .checkbox-inner::after {
+    content: '✓';
+    @apply text-white font-bold text-sm flex items-center justify-center h-full;
+  }
+  
+  /* Social icons */
+  .social-icons {
+    @apply flex gap-3;
+  }
+  
+  .social-icon {
+    @apply relative w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300;
+    background: linear-gradient(145deg, hsl(var(--surface)), hsl(var(--surface-hover)));
+    box-shadow: 4px 4px 12px hsl(var(--background)), -4px -4px 12px hsl(var(--surface-hover));
+  }
+  
+  .social-icon:hover {
+    @apply scale-110;
+    box-shadow: 
+      6px 6px 16px hsl(var(--background)), 
+      -6px -6px 16px hsl(var(--surface-hover)),
+      0 0 20px hsla(var(--neon-red), 0.3);
+  }
+  
+  /* Utility classes */
+  .text-neon {
+    color: hsl(var(--neon-red));
+    text-shadow: 0 0 10px hsla(var(--neon-red), 0.5);
+  }
+  
+  .bg-surface {
+    background-color: hsl(var(--surface));
+  }
+  
+  .bg-surface-hover {
+    background-color: hsl(var(--surface-hover));
+  }
+  
+  .bg-neon-red {
+    background-color: hsl(var(--neon-red));
+  }
+  
+  .border-neon-red {
+    border-color: hsl(var(--neon-red));
+  }
+  
+  .text-foreground-muted {
+    color: hsl(var(--foreground-muted));
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .marquee-content {
+    animation: none;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Mappora fonts */
+@font-face { font-family: 'FuturaBook'; src: url('/fonts/futura_book.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'FuturaLight'; src: url('/fonts/futura_light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'FuturaHeavy'; src: url('/fonts/futura_heavy.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Oswald'; src: url('/fonts/oswald.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Abril'; src: url('/fonts/abril.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Bookman'; src: url('/fonts/bookman.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Southland'; src: url('/fonts/southland.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+
+
+/* Custom fonts from mappora */
+@font-face {
+  font-family: 'Bebas';
+  src: url('/fonts/bebas_regular.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Bebas Book';
+  src: url('/fonts/bebas_book.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Made';
+  src: url('/fonts/made.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Collection';
+  src: url('/fonts/collection.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+@font-face { font-family: 'Barlow'; src: url('/fonts/barlow.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Abril'; src: url('/fonts/abril.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'BadScript'; src: url('/fonts/badscript.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
