@@ -136,6 +136,9 @@ export const PosterPreview = forwardRef<PosterPreviewHandle>((_, ref) => {
     style,
     theme,
     background,
+    shape,
+    orientation,
+    size,
     title,
     divider,
     subtitle,
@@ -195,7 +198,7 @@ export const PosterPreview = forwardRef<PosterPreviewHandle>((_, ref) => {
         {/* Map canvas in shape */}
         <div className="absolute inset-12">
           <div className="relative w-full h-full">
-            <ShapeMasks />
+            <ShapeMasks shape={shape} />
             <div className="absolute inset-0 rounded-md overflow-hidden">
               <MapCanvas ref={(h) => (mapCanvasRef.current = h)} />
             </div>

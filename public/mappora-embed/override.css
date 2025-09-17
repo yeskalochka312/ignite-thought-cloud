@@ -1,19 +1,40 @@
 
-/* ---- Map constructor overrides to match lovemap-studio dark theme ---- */
+/* ---- Map constructor overrides to match Map Of Love design system ---- */
 :root{
-  --bg:#0b1016;
-  --panel:#0f141c;
-  --panel-2:#121924;
-  --text:#e8edf5;
-  --muted:#98a2b3;
-  --accent:#ff354d;
-  --accent-2:#ff9aa6;
-  --radius:16px;
+  /* Exact tokens from main site */
+  --background: 217 25% 6%;
+  --surface: 217 20% 9%;
+  --surface-hover: 217 18% 11%;
+  --foreground: 210 40% 95%;
+  --foreground-muted: 217 15% 70%;
+  --neon-red: 354 84% 57%;
+  --neon-red-glow: 354 84% 57%;
+  --neon-red-dark: 354 65% 35%;
+  --border: 217 15% 20%;
+  --card: 217 23% 8%;
+  --input-bg: 217 25% 6%;
+  --glass-bg: 217 23% 8%;
+  
+  /* Legacy variables mapped to new tokens */
+  --bg: hsl(var(--background));
+  --panel: hsl(var(--card));
+  --panel-2: hsl(var(--surface));
+  --text: hsl(var(--foreground));
+  --muted: hsl(var(--foreground-muted));
+  --accent: hsl(var(--neon-red));
+  --accent-2: hsl(var(--neon-red-glow));
+  --radius: 16px;
+  
+  /* Shadows & effects from main site */  
+  --neon-glow: 0 0 24px hsla(354, 84%, 57%, 0.25);
+  --card-shadow: 0 8px 32px hsla(217, 25%, 3%, 0.6);
+  --inset-shadow: inset 2px 5px 10px hsla(217, 25%, 3%, 0.9);
 }
+
 html,body{
-  background:var(--bg)!important;
-  color:var(--text)!important;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol", sans-serif !important;
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol", sans-serif !important;
 }
 
 /* Cards / panels */
@@ -25,31 +46,80 @@ html,body{
   border: 1px solid rgba(255,255,255,.06) !important;
 }
 
-/* Buttons */
+/* Buttons - Match main site 3D button system */
 button, .btn, input[type=button], input[type=submit]{
-  background: var(--accent) !important;
-  color: white !important;
+  /* CSS Variables for colors */
+  --button_radius: 0.75em;
+  --button_color: hsl(var(--neon-red));
+  --button_outline_color: hsl(var(--neon-red-dark));
+  --button_text_color: white;
+  
+  font-size: 17px !important;
+  font-weight: bold !important;
   border: none !important;
-  border-radius: 12px !important;
-  padding: 10px 16px !important;
-  font-weight: 600 !important;
-  transition: transform .1s ease, opacity .2s ease !important;
+  cursor: pointer !important;
+  border-radius: var(--button_radius) !important;
+  background: transparent !important;
+  padding: 0 !important;
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
-button:hover, .btn:hover{ transform: translateY(-1px); opacity: .95; }
+
+/* Button surface with 3D effect */
+button:not(.no-3d)::before, .btn:not(.no-3d)::before {
+  content: '' !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  border: 2px solid var(--button_outline_color) !important;
+  border-radius: var(--button_radius) !important;
+  padding: 0.75em 1.5em !important;
+  background: var(--button_color) !important;
+  color: var(--button_text_color) !important;
+  transform: translateY(-0.2em) !important;
+  transition: transform 0.1s ease, background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease !important;
+  width: 100% !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+button:hover:not(.no-3d)::before, .btn:hover:not(.no-3d)::before{
+  transform: translateY(-0.33em) !important;
+}
+
+button:active:not(.no-3d)::before, .btn:active:not(.no-3d)::before{
+  transform: translateY(0) !important;
+}
 
 /* Secondary buttons */
 .btn-secondary, .button-secondary, .ghost, .outline{
-  background: transparent !important;
-  color: var(--text)!important;
-  border: 1px solid rgba(255,255,255,.14)!important;
+  --button_color: hsl(var(--surface-hover)) !important;
+  --button_outline_color: hsl(var(--border)) !important;
+  --button_text_color: hsl(var(--foreground)) !important;
 }
-/* Inputs */
+/* Inputs - Match main site input-glass style */
 input, select, textarea{
-  background: var(--panel-2) !important;
-  color: var(--text) !important;
-  border: 1px solid rgba(255,255,255,.08) !important;
-  border-radius: 12px !important;
+  background: hsl(var(--surface)) !important;
+  color: hsl(var(--foreground)) !important;
+  border: none !important;
+  border-radius: 9999px !important; /* Fully rounded like main site */
   outline: none !important;
+  padding: 12px 20px !important;
+  font-weight: 500 !important;
+  box-shadow: var(--inset-shadow) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  box-shadow: var(--inset-shadow), 0 0 0 2px hsl(var(--neon-red)) !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: hsl(var(--foreground-muted)) !important;
 }
 
 /* Links */
@@ -113,22 +183,25 @@ footer, .site-footer, .footer{ display:none !important; }
   border-color: rgba(255,255,255,.06) !important;
 }
 
-/* Inputs */
+/* Inputs - Consistent with main site design */
 input[type="text"], input[type="search"], input[type="date"],
 input[type="number"], input[type="email"], select, textarea {
-  background: var(--panel-2) !important;
-  border: 1px solid rgba(255,255,255,.1) !important;
-  color: var(--text) !important;
-  border-radius: 9999px !important; /* pill */
-  padding: 12px 16px !important;
+  background: hsl(var(--surface)) !important;
+  border: none !important;
+  color: hsl(var(--foreground)) !important;
+  border-radius: 9999px !important; /* pill shape like main site */
+  padding: 12px 20px !important;
   height: 44px !important;
   outline: none !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.02) !important;
+  font-weight: 500 !important;
+  box-shadow: var(--inset-shadow) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
-input::placeholder, textarea::placeholder { color: var(--muted) !important; }
+input::placeholder, textarea::placeholder { 
+  color: hsl(var(--foreground-muted)) !important; 
+}
 input:focus, select:focus, textarea:focus {
-  border-color: rgba(255,53,77,.6) !important;
-  box-shadow: 0 0 0 4px rgba(255,53,77,.12) !important;
+  box-shadow: var(--inset-shadow), 0 0 0 2px hsl(var(--neon-red)) !important;
 }
 
 /* Checkbox / radio toggles */
@@ -159,28 +232,53 @@ input[type="checkbox"]:checked::after {
   transform: rotate(45deg);
 }
 
-/* Primary button (Add to cart) */
+/* Primary button (Add to cart) - 3D effect like main site */
 button.primary, .btn-primary, .bottom-bar .btn, .add-to-cart, .pricebar .btn {
-  background: var(--accent) !important;
-  color: #fff !important;
+  --button_color: hsl(var(--neon-red)) !important;
+  --button_outline_color: hsl(var(--neon-red-dark)) !important;
+  --button_text_color: white !important;
+  
+  font-size: 17px !important;
+  font-weight: bold !important;
   border: none !important;
-  border-radius: 12px !important;
-  padding: 14px 22px !important;
-  font-weight: 700 !important;
+  cursor: pointer !important;
+  border-radius: 0.75em !important;
+  background: transparent !important;
+  padding: 0 !important;
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   height: 48px !important;
-  box-shadow: 0 10px 26px rgba(255,53,77,.30) !important;
+  min-width: 120px !important;
+  box-shadow: var(--card-shadow) !important;
 }
-.bottom-bar .btn:hover, .btn-primary:hover { transform: translateY(-1px); }
 
-/* Secondary button (download preview) */
+/* Secondary button (download preview) - Match main site outline style */
 .btn-secondary, .download, .ghost, .outline, .right .btn {
-  background: rgba(255,255,255,.04) !important;
-  color: var(--text) !important;
-  border: 1px solid rgba(255,255,255,.14) !important;
-  border-radius: 12px !important;
+  --button_color: hsl(var(--surface-hover)) !important;
+  --button_outline_color: hsl(var(--border)) !important;
+  --button_text_color: hsl(var(--foreground)) !important;
+  
+  font-size: 17px !important;
+  font-weight: bold !important;
+  border: none !important;
+  cursor: pointer !important;
+  border-radius: 0.75em !important;
+  background: transparent !important;
+  padding: 0 !important;
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   height: 44px !important;
 }
-.right .btn:hover { background: rgba(255,255,255,.06) !important; }
+
+.right .btn:hover {
+  --button_color: hsl(var(--neon-red)) !important;
+  --button_outline_color: hsl(var(--neon-red-dark)) !important;
+  --button_text_color: white !important;
+}
 
 /* Preview card */
 #board, .preview, .frame, .artboard {
@@ -333,10 +431,21 @@ input, select, textarea {
   margin: 12px 24px !important;
 }
 
-/* Inputs inside right_wrapper */
+/* Inputs inside right_wrapper - Match main site style */
 .right_wrapper input[type="text"], .right_wrapper input[type="search"], .right_wrapper select, .right_wrapper textarea {
-  background: var(--panel-2) !important; border:1px solid rgba(255,255,255,.1) !important;
-  color: var(--text) !important; border-radius: 9999px !important; height: 44px !important; padding: 10px 16px !important;
+  background: hsl(var(--surface)) !important; 
+  border: none !important;
+  color: hsl(var(--foreground)) !important; 
+  border-radius: 9999px !important; 
+  height: 44px !important; 
+  padding: 12px 20px !important;
+  font-weight: 500 !important;
+  box-shadow: var(--inset-shadow) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.right_wrapper input:focus, .right_wrapper select:focus, .right_wrapper textarea:focus {
+  box-shadow: var(--inset-shadow), 0 0 0 2px hsl(var(--neon-red)) !important;
 }
 
 /* Secondary action ("Скачать превью") */
@@ -345,16 +454,36 @@ input, select, textarea {
   border:1px solid rgba(255,255,255,.14) !important; border-radius: 12px !important; height: 44px !important;
 }
 
-/* Bottom bar price and action */
+/* Bottom bar price and action - Match main site style */
 .bottom_wrapper, #bottom, .pricebar {
-  background: var(--panel) !important; color: var(--text) !important;
-  border-top: 1px solid rgba(255,255,255,.08) !important;
+  background: hsl(var(--card)) !important; 
+  color: hsl(var(--foreground)) !important;
+  border-top: 1px solid hsl(var(--border)) !important;
+  backdrop-filter: blur(8px) !important;
 }
+
 .bottom_wrapper .innerbutton .content,
 .bottom_wrapper .btn, .bottom_wrapper .button {
-  background: hsl(var(--primary)) !important;
-  color: hsl(var(--primary-foreground)) !important;
-  border-radius: 12px !important; height: 48px !important; font-weight:700 !important;
-  box-shadow: 0 10px 26px rgba(255,53,77,.30) !important;
+  --button_color: hsl(var(--neon-red)) !important;
+  --button_outline_color: hsl(var(--neon-red-dark)) !important;
+  --button_text_color: white !important;
+  
+  font-size: 17px !important;
+  font-weight: bold !important;
+  border: none !important;
+  cursor: pointer !important;
+  border-radius: 0.75em !important;
+  background: transparent !important;
+  padding: 0 !important;
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 48px !important;
+  box-shadow: var(--card-shadow) !important;
 }
-.bottom_wrapper .pricetag, .bottom_wrapper .currency{ color: var(--text) !important; }
+
+.bottom_wrapper .pricetag, .bottom_wrapper .currency{ 
+  color: hsl(var(--foreground)) !important; 
+  font-weight: 600 !important;
+}
